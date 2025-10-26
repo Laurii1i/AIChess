@@ -7,7 +7,7 @@ from mappings import two_way
 # ---------------------------
 # Settings
 # ---------------------------
-WIDTH, HEIGHT = 480, 480
+WIDTH, HEIGHT = 700,700
 DIMENSION = 8  # 8x8 board
 SQ_SIZE = HEIGHT // DIMENSION
 FPS = 60
@@ -153,8 +153,9 @@ if __name__ == "__main__":
     import torch
     import utils as ut  # your utilities: fen_to_tensor, get_mask, index_to_move
     from model2 import ChessNet  # your loaded model
+    import time
     network = ChessNet()
-    network.load_state_dict(torch.load(r"C:\Users\lauri\Documents\Chess\AIChess\improved_model_groups0-4.pth"))
+    network.load_state_dict(torch.load(r"C:\Users\lauri\Documents\Chess\AIChess\improved_model1_groups_0-14.pth"))
     network.eval()  
 
     def network_move_func(board):

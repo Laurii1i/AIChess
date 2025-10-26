@@ -100,6 +100,7 @@ class ChessNet(nn.Module):
 
     def forward(self, x):
         # x: (B, 13, 8, 8)
+        
         b = x.shape[0]
         out = self.stem(x)
         out = self.res_blocks(out)
@@ -186,35 +187,43 @@ if __name__ == "__main__":
 
     script_dir = Path(__file__).resolve().parent
 
-    plt.ion()
+    '''plt.ion()
     fig, ax = plt.subplots()
     line_raw, = ax.plot([], [], 'b-', alpha=0.3, label='Batch Loss')    # raw batch loss
     line_smooth, = ax.plot([], [], 'r-', label='Smoothed Loss')         # moving average
     ax.set_xlabel("Batch")
     ax.set_ylabel("Loss")
     ax.set_title("Training Loss Evolution")
-    ax.legend()
+    ax.legend()'''
 
     action_size = 1968
     model = ChessNet(input_planes=13, num_filters=128, num_res_blocks=10,
                     action_size=action_size, norm='batchnorm', dropout=0.1)
     trainer = Trainer(model, action_weight=1.0, value_weight=1.0, lr=2e-4)
-    plot_package = [ax, line_raw, line_smooth]
+    #plot_package = [ax, line_raw, line_smooth]
 
     losses_track = []
-    model.load_state_dict(torch.load(r"C:\Users\lauri\Documents\Chess\AIChess\improved_model_groups0-4.pth"))
-    model.eval()  # set to evaluation mode if inference
-    for i in range(0, 14):
+    model.load_state_dict(torch.load(r"C:\Users\lauri\Documents\Chess\AIChess\improved_model1_groups_0-14.pth"))
+    model.train()
+    for i in range(2, 7):
 
-        file_path = script_dir / Path(f'../TrainingData/train-{i:05d}-of-00014.parquet')
-        print(f'{i}/{14} starting')
+        file_path = script_dir / Path(f'../TrainingData/train-{i:05d}-of-00014.parquet_edited')
+        print(f'{i}/{6} starting')
         parquet_file = pq.ParquetFile(file_path)
+        #df = pd.read_parquet(file_path, columns= ['fen', 'cp', 'line'])
 
-        for k in range(5, parquet_file.num_row_groups):
+        #df = df.drop_duplicates(subset=['fen'], keep='first')
+
+        #table = pa.Table.from_pandas(df)
+
+        # Write to Parquet file with specified row group size
+        #pq.write_table(table, script_dir / Path(f'../TrainingData/train-{i:05d}-of-00014.parquet_edited'), row_group_size=100_000)
+
+        for k in range(2, parquet_file.num_row_groups):
             table = parquet_file.read_row_group(k, columns=['fen', 'line', 'cp'])
             df = table.to_pandas()
             #df = pd.read_parquet(file_path, columns = ['fen', 'line', 'cp'])
-            df = df.drop_duplicates(subset=['fen'])
+            #df = df.drop_duplicates(subset=['fen'])
 
             #df = df.iloc[:200000].reset_index(drop=True)
             df['value_target'] = df['cp'].apply(ut.cp_to_value_target)
@@ -245,7 +254,7 @@ if __name__ == "__main__":
             # Example DataLoader (user should replace with their dataset)
 
             train_loader = DataLoader(dataset, batch_size=128, shuffle=True, num_workers=8, pin_memory=True)
-            trainer.train_epoch(train_loader, epoch=0, plot_package = plot_package, losses = losses_track)
+            trainer.train_epoch(train_loader, epoch=0, plot_package = None, losses = losses_track)
 
         torch.save(model.state_dict(), "improved_model1_groups_0-14.pth")        
 
