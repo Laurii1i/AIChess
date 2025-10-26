@@ -187,20 +187,20 @@ if __name__ == "__main__":
 
     script_dir = Path(__file__).resolve().parent
 
-    '''plt.ion()
+    plt.ion()
     fig, ax = plt.subplots()
     line_raw, = ax.plot([], [], 'b-', alpha=0.3, label='Batch Loss')    # raw batch loss
     line_smooth, = ax.plot([], [], 'r-', label='Smoothed Loss')         # moving average
     ax.set_xlabel("Batch")
     ax.set_ylabel("Loss")
     ax.set_title("Training Loss Evolution")
-    ax.legend()'''
+    ax.legend()
 
     action_size = 1968
     model = ChessNet(input_planes=13, num_filters=128, num_res_blocks=10,
                     action_size=action_size, norm='batchnorm', dropout=0.1)
     trainer = Trainer(model, action_weight=1.0, value_weight=1.0, lr=2e-4)
-    #plot_package = [ax, line_raw, line_smooth]
+    plot_package = [ax, line_raw, line_smooth]
 
     losses_track = []
     model.load_state_dict(torch.load(r"C:\Users\lauri\Documents\Chess\AIChess\improved_model1_groups_0-14.pth"))
@@ -254,7 +254,7 @@ if __name__ == "__main__":
             # Example DataLoader (user should replace with their dataset)
 
             train_loader = DataLoader(dataset, batch_size=128, shuffle=True, num_workers=8, pin_memory=True)
-            trainer.train_epoch(train_loader, epoch=0, plot_package = None, losses = losses_track)
+            trainer.train_epoch(train_loader, epoch=0, plot_package = plot_package, losses = losses_track)
 
         torch.save(model.state_dict(), "improved_model1_groups_0-14.pth")        
 
