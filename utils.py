@@ -205,3 +205,6 @@ def plot(losses, line_raw, line_smooth, ax, window=10):
     ax.autoscale_view()
 
     plt.pause(0.001)
+
+def letter_to_index(letter):
+    return ord(letter.lower()) - ord('a')
