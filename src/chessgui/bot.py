@@ -25,9 +25,10 @@ class Bot:
             chessGUI: An instance of the GUI class that holds the chess board.
         """
         self.chessGUI = chessGUI
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.nn = ChessNet()
         self.nn.load_state_dict(
-            torch.load(ROOT / 'src' / 'model' / 'model_weights.pth')
+            torch.load(ROOT / 'src' / 'model' / 'model_weights.pth', map_location = self.device)
         )
         self.nn.eval()
 
