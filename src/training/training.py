@@ -344,23 +344,22 @@ class Trainer:
 
         losses = np.asarray(self.losses, dtype=float)
         n = len(losses)
+        x = np.arange(n)
 
-        if n < window:
-            smoothed = losses
-            x_smooth = np.arange(n)
-        else:
+        # Always update raw line
+        self.line_raw.set_data(x, losses)
+
+        if n >= window:
+            # Compute smoothed only when enough data
             kernel = np.ones(window) / window
             smoothed_full = np.convolve(losses, kernel, mode='valid')
-
-            # compute the correct x range for the valid region
             offset = window // 2
             x_smooth = np.arange(offset, offset + len(smoothed_full))
-            smoothed = smoothed_full
-
-        # Plot both raw and smoothed (trimmed) lines
-        x = np.arange(n)
-        self.line_raw.set_data(x, losses)
-        self.line_smooth.set_data(x_smooth, smoothed)
+            self.line_smooth.set_data(x_smooth, smoothed_full)
+            self.line_smooth.set_visible(True)
+        else:
+            # Hide smoothed line until enough points exist
+            self.line_smooth.set_visible(False)
 
         self.ax.relim()
         self.ax.autoscale_view()
