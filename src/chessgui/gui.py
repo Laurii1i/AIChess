@@ -17,6 +17,7 @@ from .bot import Bot
 from .button import Button, ButtonText
 from .startmenu import StartMenu
 from .board import Board
+from .instructionpopup import InstructionPopup
 from config import HEIGHT, SQ_SIZE, WIDTH, FPS
 
 
@@ -34,9 +35,23 @@ class Gui:
         self.Bot = Bot(chessGUI=self)
         self.human_color = "white"  # Draw from white's perspective at start
         self.dragging_piece = None
+
+        self.show_instructions_popup()
         self.startmenu = StartMenu(self, title_text="Let's play a game of chess!")
 
     # --- Menu ---
+
+    def show_instructions_popup(self):
+        popup_text = (
+        "Welcome to AI chess bot!\n"
+        "To play, drag and drop pieces to make moves.\n"
+        "Your piece is returned if you try to do an illegal move!\n"
+        "Castling and en-passant are fully supported.\n"
+        "To castle, drag your king two squares to the right, or left.\n"
+        "The bot will respond automatically after your move."
+    )
+        popup = InstructionPopup(self, popup_text, "https://www.instructables.com/Playing-Chess/")
+        popup.run()
 
     def initiate_game(self, color: str) -> None:
         """Start a new game as the specified color.

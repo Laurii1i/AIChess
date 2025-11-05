@@ -6,6 +6,7 @@ from .gui import Gui
 from .model import ChessNet
 from .piece import Piece
 from .startmenu import StartMenu
+from .instructionpopup import InstructionPopup
 from pathlib import Path
 import pandas as pd
 
@@ -31,6 +32,7 @@ __all__ = [
     "ChessNet",
     "Piece",
     "StartMenu",
+    "InstructionPopup"
     "ut",
     "HEIGHT",
     "WIDTH",
