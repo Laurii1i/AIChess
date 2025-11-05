@@ -1,7 +1,14 @@
+import sys
+from pathlib import Path
 
-from ChessGUI import ChessGUI
+# Add src/ to Python module search path
+SRC_DIR = Path(__file__).parent / "src"
+sys.path.append(str(SRC_DIR))
+
+# import the chessgui package
+from chessgui import Gui
 
 if __name__ == "__main__":
 
-    gui = ChessGUI()
+    gui = Gui()
     gui.run()

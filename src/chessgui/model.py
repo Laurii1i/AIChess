@@ -8,7 +8,6 @@ import pyarrow.parquet as pq
 from pathlib import Path
 import chess
 import utils as ut
-from mappings import two_way
 from torch.utils.data import DataLoader, TensorDataset
 import matplotlib.pyplot as plt
 import pyarrow as pa
@@ -230,7 +229,7 @@ if __name__ == "__main__":
             df['best_move'] = df.apply(ut.line_to_best_move, axis = 1)
             df = df[df['best_move'] != 'nan'].reset_index(drop=True)
             df['tensor'] = df['fen'].apply(ut.fen_to_tensor) # 48 seconds for million rows
-            df['best_move_labels'] = df['best_move'].map(two_way)
+            df['best_move_labels'] = df['best_move'].map(uci_index_connector)
             df['legal_moves_mask'] = df['fen'].apply(ut.get_mask)
             
             # Save to Parquet with row groups of 100,000 rows
