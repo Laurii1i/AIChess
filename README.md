@@ -29,6 +29,7 @@ git clone https://github.com/Laurii1i/AIChess.git
 2. Create a virtual environment (recommended):
 
 ```bash
+cd AIChess
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
 venv\Scripts\activate     # Windows
@@ -42,11 +43,11 @@ pip install -r requirements.txt
 
 4. Installing PyTorch
 
-Install the CPU version (works everywhere):
+Install the CPU version (simple installation, slow performance in training):
 ```bash
 pip install torch torchvision
 ```
-For GPU acceleration, follow the official guide:
+Optionally, you can install the GPU-enabled version of PyTorch from the following link:
 🔗 https://pytorch.org/get-started/locally/
 
 
@@ -92,13 +93,13 @@ This project is licensed under the MIT License.
 
 ### Input Tensor Encoding
 
-    Each board position is encoded as a 13×8×8 tensor:
+Each board position is encoded as a 13×8×8 tensor:
 
-    12 planes for pieces (6 for white, 6 for black) representing their presence on each square.
+12 planes for pieces (6 for white, 6 for black) representing their presence on each square.
 
-    1 additional plane for side-to-move (1 for white, 0 for black).
+1 additional plane for side-to-move (1 for white, 0 for black).
 
-    This encoding preserves spatial information of the board and allows the convolutional layers to detect local patterns (e.g., pawn structures, attacks, defenses) and propagate them to deeper layers for high-level positional understanding.
+This encoding preserves spatial information of the board and allows the convolutional layers to detect local patterns (e.g., pawn structures, attacks, defenses) and propagate them to deeper layers for high-level positional understanding.
 
 ### Output Move Space
 
