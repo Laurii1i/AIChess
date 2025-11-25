@@ -128,11 +128,6 @@ class Piece:
         """Return True if this piece is white."""
         return self.symbol.isupper()
 
-    def is_about_to_promote(self):
-
-        self.symbol.lower() == "p" and chess.square_rank(target_sq) in [0, 7]
-        promotion_symbol = self.open_promotion_popup(piece)
-
     def promote(self, symbol):
         """
         Promote this piece to another type (usually when reaching the end rank).

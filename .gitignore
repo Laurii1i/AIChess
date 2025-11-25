@@ -1,3 +1,5 @@
 venv/
 improved_model1_groups_0-14.pth
 Stockfish/
+__pycache__/
+*.pyc

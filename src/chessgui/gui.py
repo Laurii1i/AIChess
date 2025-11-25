@@ -115,9 +115,9 @@ class Gui:
     # --- Main Loop ---
 
     def run(self) -> None:
-        """Main loop of the game — handles events, updates, and drawing."""
         self.startmenu.initiate()
         running = True
+        mouse_pos = (0, 0)  # store current mouse position
 
         while running:
             self.clock.tick(FPS)
@@ -131,12 +131,14 @@ class Gui:
                     self.on_mouse_down(event.pos)
                 elif event.type == pygame.MOUSEBUTTONUP:
                     self.on_mouse_up(event.pos)
+                elif event.type == pygame.MOUSEMOTION:
+                    mouse_pos = event.pos  # update current mouse position
 
             self.board.draw()
 
             if self.board.dragging_piece:
-                x = event.pos[0] - self.board.drag_offset[0]
-                y = event.pos[1] - self.board.drag_offset[1]
+                x = mouse_pos[0] - self.board.drag_offset[0]
+                y = mouse_pos[1] - self.board.drag_offset[1]
                 self.board.dragging_piece.draw(location=(x, y))
 
             pygame.display.flip()

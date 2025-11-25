@@ -15,7 +15,7 @@ AIChess is a chess engine trained using deep neural networks to evaluate positio
     * Value head evaluates the position on a scale from -1 (black advantage) to 1 (white advantage). Analogous to the centipawn scores.
     * I didn’t use a separate validation dataset because the Kaggle dataset was already highly diverse and contained far more analyzed chess positions than I could feasibly train on. (I know this is bad practice)
     * The source code for the developed model is located at /src/model/model.py
-* Research was conducted for the neural network architecture. The choice for the architecture is explained under section ## Architecture
+* Research was conducted for the neural network architecture. The choice for the architecture is explained under section *Architecture*.
 * A GUI was built using the Pygame module to provide an interactive interface for playing against the NN. Source for this code is located at /src/chessgui/
 
 ## Installation
