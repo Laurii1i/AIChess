@@ -3,7 +3,7 @@ from .board import Board
 from .bot import Bot
 from .button import Button
 from .gui import Gui
-from .model import ChessNet
+from src.model import ChessNet
 from .piece import Piece
 from .startmenu import StartMenu
 from .instructionpopup import InstructionPopup
